@@ -7,6 +7,8 @@ import { markdownToHtml } from '@/lib/markdown';
 import styles from '../articles.module.css';
 import ArticleContent from '@/components/ArticleContent';
 import ArticleJsonLd from '@/components/ArticleJsonLd';
+import TableOfContentsServer from '@/components/TableOfContentsServer';
+import TableOfContentsClient from '@/components/TableOfContentsClient';
 
 interface ArticlePageProps {
   params: Promise<{
@@ -88,8 +90,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <div className={styles.articlePageContainer}>
-
       <ArticleJsonLd article={article} url={canonicalUrl} />
+
+      {/* Table of Contents - Server rendered structure with client-side interactivity */}
+      <TableOfContentsServer htmlContent={htmlContent} />
+      <TableOfContentsClient />
 
       <article className={styles.articleContainer}>
         <header className={styles.articleHeader}>

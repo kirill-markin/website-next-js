@@ -69,6 +69,13 @@
   background-color: #f0f0f0;
 }
 
+/* New wrapper container for article content and TOC */
+.articleContentWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
 @media screen and (max-width: 768px) {
   .articleContent table {
     font-size: 0.9rem;

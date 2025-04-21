@@ -9,7 +9,7 @@ interface ArticleContentProps {
 }
 
 export default function ArticleContent({ htmlContent, className }: ArticleContentProps) {
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -96,13 +96,24 @@ export default function ArticleContent({ htmlContent, className }: ArticleConten
       // Add button to pre element
       preElement.appendChild(button);
     });
+
+    // Ensure headings have IDs for the table of contents
+    const headingElements = contentRef.current.querySelectorAll('h1, h2, h3, h4');
+    headingElements.forEach((heading) => {
+      if (!heading.id) {
+        const id = heading.textContent?.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '') || '';
+        heading.id = id;
+      }
+    });
   }, [htmlContent]);
 
   return (
-    <div
-      ref={contentRef}
-      className={`${styles.articleContent} ${className || ''}`}
-      dangerouslySetInnerHTML={{ __html: htmlContent }}
-    />
+    <div className={styles.articleContentWrapper}>
+      <div
+        ref={contentRef}
+        className={`${styles.articleContent} ${className || ''}`}
+        dangerouslySetInnerHTML={{ __html: htmlContent }}
+      />
+    </div>
   );
 } 

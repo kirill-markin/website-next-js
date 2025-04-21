@@ -1,0 +1,96 @@
+.tableOfContents {
+    position: fixed;
+    right: 0;
+    top: 40px;
+    /* Adjust based on your header height */
+    width: calc(((100vw - 820px) / 2) - 40px);
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    border: none;
+    background-color: white;
+    font-size: 0.9rem;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+    border-left: 1px solid var(--dark-gray);
+}
+
+.tocHeader {
+    color: var(--dark-gray);
+    position: relative;
+    padding: 0.5rem;
+    height: 40.5px;
+    border-bottom: 1px solid var(--dark-gray);
+}
+
+.tocList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding: 0.5rem;
+}
+
+.tocItem {
+    margin-bottom: 0.5rem;
+}
+
+.tocLink {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0.25rem 0;
+    cursor: pointer;
+    color: #666;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.tocLink:hover {
+    color: var(--dark-gray);
+}
+
+.level1 {
+    font-weight: 600;
+}
+
+.level2 {
+    padding-left: 0.75rem;
+}
+
+.level3 {
+    padding-left: 1.5rem;
+    font-size: 0.8rem;
+}
+
+.level4 {
+    padding-left: 2.25rem;
+    font-size: 0.8rem;
+}
+
+.active .tocLink {
+    color: var(--dark-gray);
+    text-decoration: underline;
+}
+
+/* Hide on mobile */
+@media (max-width: 1300px) {
+    .tableOfContents {
+        display: none;
+    }
+}
+
+/* Prevent overflow scrolling conflicts */
+@media (min-width: 1225px) {
+    .tableOfContents::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .tableOfContents::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .tableOfContents::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+}
