@@ -4,9 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ServiceOtherData } from '@/types/services';
 import { getTranslation, getPathSegmentByLanguage, getSubPathSegmentByLanguage } from '@/lib/localization';
-import styles from '../Services/Services.module.css';
+import styles from './Services.module.css';
 
-interface ServicesGridProps {
+interface ServicesOtherGridProps {
     services: ServiceOtherData[]; // ALL services (not filtered)
     currentCategory: string;
     language: string;
@@ -78,8 +78,8 @@ function ServiceCard({ service, language }: { service: ServiceOtherData; languag
     );
 }
 
-// Main client component for services grid with filtering
-export default function ServicesGrid({ services, currentCategory, language }: ServicesGridProps) {
+// Main client component for services other grid with filtering
+export default function ServicesOtherGrid({ services, currentCategory, language }: ServicesOtherGridProps) {
     // Get translations
     const t = getTranslation('services', language);
 
@@ -92,17 +92,6 @@ export default function ServicesGrid({ services, currentCategory, language }: Se
     const filteredServices = currentCategory === 'all'
         ? services
         : services.filter(service => service.categoryId === currentCategory);
-
-    // SEO-friendly category title
-    const getCategoryTitle = () => {
-        if (currentCategory === 'all') {
-            return t.serviceCategories?.all || 'All Services';
-        }
-
-        const formattedCategory = currentCategory.charAt(0).toUpperCase() + currentCategory.slice(1);
-        const categoryLabel = t.serviceCategories?.[currentCategory as keyof typeof t.serviceCategories] || formattedCategory;
-        return categoryLabel;
-    };
 
     // Helper to get the localized category URL
     const getCategoryUrl = (category: string) => {
@@ -136,9 +125,9 @@ export default function ServicesGrid({ services, currentCategory, language }: Se
         <section className={styles.services}>
             <div className={styles.servicesHeader}>
                 <div className={styles.servicesHeaderTitle}>
-                    <h1 className={styles.servicesTitle}>
-                        {getCategoryTitle()}
-                    </h1>
+                    <h2 className={styles.servicesTitle}>
+                        Other Service<span className={styles.glitchLetter}>s</span>
+                    </h2>
                     <div className={styles.categoryDescription}>
                         <p>{t.description}</p>
                     </div>
