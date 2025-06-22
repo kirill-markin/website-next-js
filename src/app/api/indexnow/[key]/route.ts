@@ -22,7 +22,7 @@ export async function GET(
     request: NextRequest,
     context: { params: Promise<{ key: string }> }
 ): Promise<NextResponse> {
-    // В Next.js 15 параметры являются асинхронными и требуют await
+    // In Next.js route parameters are synchronous, no await is needed
     const { key } = await context.params;
     const expectedKey = process.env.INDEXNOW_API_KEY;
 
@@ -33,10 +33,10 @@ export async function GET(
         );
     }
 
-    // Удаляем расширение .txt из ключа для проверки
+    // Remove the .txt extension from the key for comparison
     const cleanKey = key.endsWith('.txt') ? key.slice(0, -4) : key;
 
-    // Проверяем, соответствует ли ключ ожидаемому
+    // Check that the key matches the expected value
     if (cleanKey !== expectedKey) {
         return NextResponse.json(
             { error: 'Not found' },
@@ -44,7 +44,7 @@ export async function GET(
         );
     }
 
-    // Для запроса с .txt возвращаем содержимое файла
+    // If the request includes .txt return the file contents
     if (key.endsWith('.txt')) {
         return new NextResponse(expectedKey, {
             headers: {
@@ -54,7 +54,7 @@ export async function GET(
         });
     }
 
-    // Для запроса без .txt перенаправляем на версию с .txt
+    // For requests without .txt redirect to the .txt version
     const url = new URL(request.url);
     return NextResponse.redirect(new URL(`/${expectedKey}.txt`, url.origin));
 } 
