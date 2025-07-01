@@ -20,10 +20,10 @@ export async function generateStaticParams() {
 
 export async function GET(
     request: NextRequest,
-    context: { params: Promise<{ key: string }> }
+    context: { params: { key: string } }
 ): Promise<NextResponse> {
     // In Next.js route parameters are synchronous, no await is needed
-    const { key } = await context.params;
+    const { key } = context.params;
     const expectedKey = process.env.INDEXNOW_API_KEY;
 
     if (!expectedKey) {
