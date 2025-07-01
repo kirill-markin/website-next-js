@@ -22,7 +22,7 @@ export async function GET(
     request: NextRequest,
     context: { params: { key: string } }
 ): Promise<NextResponse> {
-    // In Next.js route parameters are synchronous, no await is needed
+    // Params are synchronous in Next.js, so no await is needed
     const { key } = context.params;
     const expectedKey = process.env.INDEXNOW_API_KEY;
 
