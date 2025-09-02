@@ -2,6 +2,7 @@
 
 import { Article } from '@/lib/articles';
 import { personalInfo } from '@/data/personalInfo';
+import { DEFAULT_LANGUAGE, getPathSegmentByLanguage } from '@/lib/localization';
 
 type ArticlesListJsonLdProps = {
   articles: Article[];
@@ -30,12 +31,18 @@ export default function ArticlesListJsonLd({ articles, url, tag }: ArticlesListJ
     },
     'mainEntity': {
       '@type': 'ItemList',
-      'itemListElement': articles.map((article, index) => ({
-        '@type': 'ListItem',
-        'position': index + 1,
-        'url': `https://kirill-markin.com/articles/${article.slug}/`,
-        'name': article.metadata.title
-      }))
+      'itemListElement': articles.map((article, index) => {
+        const articleUrl = article.metadata.language === DEFAULT_LANGUAGE
+          ? `https://kirill-markin.com/articles/${article.slug}/`
+          : `https://kirill-markin.com/${article.metadata.language}/${getPathSegmentByLanguage('articles', article.metadata.language)}/${article.slug}/`;
+
+        return {
+          '@type': 'ListItem',
+          'position': index + 1,
+          'url': articleUrl,
+          'name': article.metadata.title
+        };
+      })
     }
   };
 
